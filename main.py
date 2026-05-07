@@ -11,26 +11,81 @@ st.set_page_config(
 )
 
 # ──────────────────────────────────────────────
-# 커스텀 CSS (가독성 개선 버전)
+# 커스텀 CSS (가독성 완전 개선)
 # ──────────────────────────────────────────────
 st.markdown("""
 <style>
-    /* ── 사이드바 배경 & 기본 글씨 ── */
+    /* ── 메인 영역 배경 ── */
+    .stApp {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    }
+
+    /* ★★★ 모든 텍스트 기본 색상을 밝게 ★★★ */
+    .stApp, .stApp * {
+        color: #f0f0f0 !important;
+    }
+    
+    /* ★★★ 위젯 라벨 (selectbox, number_input, text_area 등) ★★★ */
+    .stApp label,
+    .stApp .stTextArea label,
+    .stApp .stSelectbox label,
+    .stApp .stNumberInput label,
+    .stApp .stTextInput label,
+    .stApp [data-testid="stWidgetLabel"],
+    .stApp [data-testid="stWidgetLabel"] p,
+    .stApp [data-testid="stWidgetLabel"] span,
+    .stApp [data-testid="stWidgetLabel"] div {
+        color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+    /* ★★★ 입력 필드 내부 텍스트 ★★★ */
+    .stApp input,
+    .stApp textarea,
+    .stApp select,
+    .stApp [data-baseweb="select"] span,
+    .stApp [data-baseweb="input"] input,
+    .stApp [data-baseweb="textarea"] textarea {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,0.1) !important;
+    }
+
+    /* ★★★ placeholder 텍스트 ★★★ */
+    .stApp input::placeholder,
+    .stApp textarea::placeholder {
+        color: #999999 !important;
+        opacity: 1 !important;
+    }
+
+    /* ★★★ selectbox 드롭다운 텍스트 ★★★ */
+    .stApp [data-baseweb="select"] {
+        color: #ffffff !important;
+    }
+    .stApp [data-baseweb="select"] > div {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: #ffffff !important;
+    }
+    
+    /* ★★★ number input 버튼 ★★★ */
+    .stApp [data-baseweb="input"] {
+        background-color: rgba(255,255,255,0.1) !important;
+    }
+    .stApp button[kind="minimal"] {
+        color: #ffffff !important;
+    }
+
+    /* ── 사이드바 ── */
     [data-testid="stSidebar"] {
         background: #1a1a2e !important;
     }
     [data-testid="stSidebar"] * {
         color: #f0f0f0 !important;
     }
-    [data-testid="stSidebar"] .stMarkdown p,
-    [data-testid="stSidebar"] .stMarkdown span,
-    [data-testid="stSidebar"] .stMarkdown div {
-        color: #f0f0f0 !important;
-    }
-
-    /* ── 메인 영역 배경 ── */
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
+        color: #ffffff !important;
+        opacity: 1 !important;
     }
 
     /* ── 메인 타이틀 ── */
@@ -45,7 +100,7 @@ st.markdown("""
     }
     .sub-title {
         text-align: center;
-        color: #bbb !important;
+        color: #cccccc !important;
         font-size: 1rem;
         margin-bottom: 2rem;
     }
@@ -69,10 +124,9 @@ st.markdown("""
         color: #ffffff !important;
         line-height: 1.9;
         font-size: 1.05rem;
-        font-weight: 400;
     }
 
-    /* ── 토큰 사용량 카드 (메인) ── */
+    /* ── 토큰 사용량 카드 ── */
     .token-card {
         background: rgba(102,126,234,0.15);
         border: 1px solid rgba(102,126,234,0.4);
@@ -90,7 +144,6 @@ st.markdown("""
         color: #e8e8e8 !important;
         font-size: 0.95rem;
         padding: 0.25rem 0;
-        font-weight: 400;
     }
     .token-highlight {
         color: #f093fb !important;
@@ -98,7 +151,7 @@ st.markdown("""
         font-size: 1rem;
     }
 
-    /* ── 사이드바: 누적 사용량 카드 ── */
+    /* ── 사이드바: 누적 사용량 ── */
     .total-usage {
         text-align: center;
         background: rgba(167,139,250,0.15);
@@ -107,36 +160,32 @@ st.markdown("""
         padding: 1rem;
         margin-top: 0.5rem;
     }
-    .total-usage .usage-title {
+    .usage-title {
         color: #a78bfa !important;
         font-weight: 700;
         font-size: 1.1rem;
         margin-bottom: 0.6rem;
     }
-    .total-usage .usage-detail {
+    .usage-detail {
         color: #ffffff !important;
         font-size: 0.95rem;
-        font-weight: 400;
         line-height: 1.8;
     }
-    .total-usage .usage-detail b {
-        font-weight: 700;
-    }
-    .total-usage .usage-detail .val-input {
+    .val-input {
         color: #7dd3fc !important;
         font-weight: 700;
     }
-    .total-usage .usage-detail .val-output {
+    .val-output {
         color: #f0abfc !important;
         font-weight: 700;
     }
-    .total-usage .usage-detail .val-total {
+    .val-total {
         color: #ffffff !important;
         font-weight: 700;
         font-size: 1.05rem;
     }
 
-    /* ── 사이드바: 대화 기록 ── */
+    /* ── 대화 기록 ── */
     .history-q {
         background: rgba(102,126,234,0.25);
         border-left: 4px solid #667eea;
@@ -156,13 +205,11 @@ st.markdown("""
         color: #e8e8e8 !important;
         font-size: 0.9rem;
         line-height: 1.7;
-        font-weight: 400;
     }
-    .history-a .history-tokens {
+    .history-tokens {
         font-size: 0.8rem;
         color: #b0b0b0 !important;
         margin-top: 0.4rem;
-        font-weight: 400;
     }
 
     /* ── 경고 박스 ── */
@@ -174,21 +221,60 @@ st.markdown("""
         color: #ffd54f !important;
         text-align: center;
         margin: 2rem 0;
-        font-weight: 500;
+    }
+
+    /* ── 구분선 색상 ── */
+    .stApp hr {
+        border-color: rgba(255,255,255,0.15) !important;
+    }
+
+    /* ── st.info, st.warning 등 알림 텍스트 ── */
+    .stAlert p {
+        color: #333333 !important;
     }
 
     /* ── 하단 정보 ── */
     .footer-info {
         text-align: center;
-        color: #999 !important;
+        color: #999999 !important;
         font-size: 0.8rem;
         padding: 1rem 0;
+    }
+
+    /* ── 버튼 텍스트 ── */
+    .stApp button[kind="primary"] p,
+    .stApp button[kind="primary"] span {
+        color: #ffffff !important;
+    }
+    .stApp button p,
+    .stApp button span {
+        color: #ffffff !important;
+    }
+    
+    /* ── markdown 내부 텍스트 ── */
+    .stApp .stMarkdown p,
+    .stApp .stMarkdown li,
+    .stApp .stMarkdown h1,
+    .stApp .stMarkdown h2,
+    .stApp .stMarkdown h3,
+    .stApp .stMarkdown h4,
+    .stApp .stMarkdown code,
+    .stApp .stMarkdown span {
+        color: #f0f0f0 !important;
+    }
+    
+    /* ── 코드블록 배경 ── */
+    .stApp .stMarkdown pre {
+        background: rgba(0,0,0,0.3) !important;
+    }
+    .stApp .stMarkdown pre code {
+        color: #e0e0e0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ──────────────────────────────────────────────
-# API 키 로드 (Streamlit Secrets)
+# API 키 로드
 # ──────────────────────────────────────────────
 def get_api_key():
     try:
@@ -204,7 +290,6 @@ api_key = get_api_key()
 st.markdown('<div class="main-title">🤖 Claude AI에게 질문하기</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">당곡고등학교 AI 학습 도우미</div>', unsafe_allow_html=True)
 
-# API 키 체크
 if not api_key:
     st.markdown("""
     <div class="warning-box">
@@ -212,21 +297,17 @@ if not api_key:
         Streamlit Cloud의 <b>Secrets</b>에 <code>ANTHROPIC_API_KEY</code>를 추가해주세요.
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown("### 🔧 설정 방법")
-    st.code("""
-# Streamlit Cloud → 앱 Settings → Secrets에 아래 내용 입력:
-ANTHROPIC_API_KEY = "sk-ant-api03-여기에_실제_키_입력"
-    """, language="toml")
+    st.code('ANTHROPIC_API_KEY = "sk-ant-api03-여기에_실제_키_입력"', language="toml")
     st.stop()
 
 # ──────────────────────────────────────────────
-# Anthropic 클라이언트 초기화
+# 클라이언트 초기화
 # ──────────────────────────────────────────────
 client = Anthropic(api_key=api_key)
 
 # ──────────────────────────────────────────────
-# 세션 상태 초기화
+# 세션 상태
 # ──────────────────────────────────────────────
 if "history" not in st.session_state:
     st.session_state.history = []
@@ -287,7 +368,7 @@ with col_btn2:
     send_clicked = st.button("🚀 질문하기", use_container_width=True, type="primary")
 
 # ──────────────────────────────────────────────
-# API 호출 및 답변 생성
+# API 호출
 # ──────────────────────────────────────────────
 if send_clicked and question.strip():
     with st.spinner("🤔 AI가 생각하고 있어요..."):
@@ -296,9 +377,7 @@ if send_clicked and question.strip():
                 model=selected_model,
                 max_tokens=max_tokens,
                 system=SYSTEM_PROMPT,
-                messages=[
-                    {"role": "user", "content": question.strip()}
-                ],
+                messages=[{"role": "user", "content": question.strip()}],
             )
 
             answer = response.content[0].text
@@ -307,7 +386,6 @@ if send_clicked and question.strip():
 
             st.session_state.total_input += input_tokens
             st.session_state.total_output += output_tokens
-
             st.session_state.history.append({
                 "question": question.strip(),
                 "answer": answer,
@@ -316,24 +394,22 @@ if send_clicked and question.strip():
                 "output_tokens": output_tokens,
             })
 
-            # ── 답변 표시 ──
             st.markdown("### 📝 AI 답변")
             st.markdown(answer)
 
-            # ── 토큰 사용량 표시 ──
             st.markdown(f"""
             <div class="token-card">
                 <div class="token-title">📊 이번 질문 토큰 사용량</div>
                 <div class="token-item">
-                    🔵 입력(Input) 토큰: <span class="token-highlight">{input_tokens:,}</span>
+                    🔵 입력(Input): <span class="token-highlight">{input_tokens:,}</span> 토큰
                 </div>
                 <div class="token-item">
-                    🟣 출력(Output) 토큰: <span class="token-highlight">{output_tokens:,}</span>
+                    🟣 출력(Output): <span class="token-highlight">{output_tokens:,}</span> 토큰
                 </div>
                 <div class="token-item">
-                    ⚪ 합계: <span class="token-highlight">{input_tokens + output_tokens:,}</span>
+                    ⚪ 합계: <span class="token-highlight">{input_tokens + output_tokens:,}</span> 토큰
                 </div>
-                <div class="token-item" style="margin-top:0.5rem; color:#aaa !important; font-size:0.85rem;">
+                <div class="token-item" style="margin-top:0.5rem; font-size:0.85rem; color:#aaa !important;">
                     사용 모델: {selected_model_name}
                 </div>
             </div>
@@ -341,17 +417,17 @@ if send_clicked and question.strip():
 
         except Exception as e:
             error_msg = str(e)
-            st.error(f"❌ 오류가 발생했습니다: {error_msg}")
+            st.error(f"❌ 오류 발생: {error_msg}")
             if "invalid_api_key" in error_msg or "authentication" in error_msg.lower():
-                st.warning("API 키가 올바르지 않습니다. Secrets 설정을 확인해주세요.")
+                st.warning("API 키가 올바르지 않습니다.")
             elif "rate_limit" in error_msg.lower():
-                st.warning("API 호출 한도에 도달했습니다. 잠시 후 다시 시도해주세요.")
+                st.warning("호출 한도 도달. 잠시 후 다시 시도하세요.")
 
 elif send_clicked and not question.strip():
     st.warning("⚠️ 질문을 입력해주세요!")
 
 # ──────────────────────────────────────────────
-# 사이드바: 누적 사용량 & 대화 기록
+# 사이드바
 # ──────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## 📈 누적 사용량")
@@ -362,9 +438,7 @@ with st.sidebar:
 
         st.markdown(f"""
         <div class="total-usage">
-            <div class="usage-title">
-                총 {len(st.session_state.history)}회 질문
-            </div>
+            <div class="usage-title">총 {len(st.session_state.history)}회 질문</div>
             <div class="usage-detail">
                 🔵 총 입력: <span class="val-input">{total_in:,}</span> 토큰<br>
                 🟣 총 출력: <span class="val-output">{total_out:,}</span> 토큰<br>
@@ -385,9 +459,7 @@ with st.sidebar:
             a_short = item["answer"][:100] + ("..." if len(item["answer"]) > 100 else "")
 
             st.markdown(f"""
-            <div class="history-q">
-                <b>Q{idx}.</b> {q_short}
-            </div>
+            <div class="history-q"><b>Q{idx}.</b> {q_short}</div>
             <div class="history-a">
                 {a_short}
                 <div class="history-tokens">
@@ -399,20 +471,15 @@ with st.sidebar:
         st.caption("질문을 하면 여기에 기록됩니다.")
 
     st.markdown("---")
-
     if st.button("🗑️ 대화 기록 초기화", use_container_width=True):
         st.session_state.history = []
         st.session_state.total_input = 0
         st.session_state.total_output = 0
         st.rerun()
 
-# ──────────────────────────────────────────────
-# 하단 정보
-# ──────────────────────────────────────────────
 st.markdown("---")
 st.markdown("""
 <div class="footer-info">
-    💡 이 앱은 Anthropic의 Claude API를 사용합니다.<br>
-    학습 목적으로 활용해주세요. | 당곡고등학교 AI 학습 도우미
+    💡 Anthropic Claude API 사용 | 당곡고등학교 AI 학습 도우미
 </div>
 """, unsafe_allow_html=True)
