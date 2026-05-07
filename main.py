@@ -39,15 +39,50 @@ st.markdown("""
         opacity: 1 !important;
     }
 
-    /* ★★★ 입력 필드 내부 텍스트 ★★★ */
+       /* ★★★ 입력 필드 내부 텍스트 (완전 강제) ★★★ */
     .stApp input,
     .stApp textarea,
     .stApp select,
     .stApp [data-baseweb="select"] span,
     .stApp [data-baseweb="input"] input,
     .stApp [data-baseweb="textarea"] textarea {
-        color: #ffffff !important;
-        background-color: rgba(255,255,255,0.1) !important;
+        color: #1a1a2e !important;
+        background-color: rgba(255,255,255,0.95) !important;
+        font-weight: 600 !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+    }
+
+    /* ★★★ number_input 전용 (완전 강제) ★★★ */
+    .stApp .stNumberInput input,
+    .stApp .stNumberInput [data-baseweb="input"] input,
+    .stApp [data-testid="stNumberInput"] input,
+    .stApp [data-baseweb="input"] input[type="number"],
+    .stApp [data-baseweb="input"] input[inputmode="numeric"] {
+        color: #1a1a2e !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+        background-color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        opacity: 1 !important;
+    }
+
+    /* ★★★ selectbox 내부 텍스트도 진하게 ★★★ */
+    .stApp [data-baseweb="select"] > div {
+        background-color: rgba(255,255,255,0.95) !important;
+    }
+    .stApp [data-baseweb="select"] > div > div {
+        color: #1a1a2e !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+        font-weight: 600 !important;
+    }
+
+    /* ★★★ placeholder ★★★ */
+    .stApp input::placeholder,
+    .stApp textarea::placeholder {
+        color: #888888 !important;
+        -webkit-text-fill-color: #888888 !important;
+        opacity: 1 !important;
+    }
     }
 
     /* ★★★ placeholder 텍스트 ★★★ */
