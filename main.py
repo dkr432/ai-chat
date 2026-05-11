@@ -11,119 +11,189 @@ st.set_page_config(
 )
 
 # ──────────────────────────────────────────────
-# 커스텀 CSS (가독성 완전 개선)
+# 커스텀 CSS (최종 가독성 완전 수정)
 # ──────────────────────────────────────────────
 st.markdown("""
 <style>
-    /* ── 메인 영역 배경 ── */
+    /* ===== 메인 배경 ===== */
     .stApp {
         background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     }
 
-    /* ★★★ 모든 텍스트 기본 색상을 밝게 ★★★ */
-    .stApp, .stApp * {
-        color: #f0f0f0 !important;
-    }
-    
-    /* ★★★ 위젯 라벨 (selectbox, number_input, text_area 등) ★★★ */
+    /* ===== 전체 텍스트 기본 색상 ===== */
+    .stApp p,
+    .stApp span,
+    .stApp div,
     .stApp label,
-    .stApp .stTextArea label,
-    .stApp .stSelectbox label,
-    .stApp .stNumberInput label,
-    .stApp .stTextInput label,
-    .stApp [data-testid="stWidgetLabel"],
+    .stApp li,
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5,
+    .stApp td, .stApp th,
+    .stApp caption {
+        color: #f0f0f0 !important;
+        -webkit-text-fill-color: #f0f0f0 !important;
+    }
+
+    /* ===== 위젯 라벨 ===== */
     .stApp [data-testid="stWidgetLabel"] p,
     .stApp [data-testid="stWidgetLabel"] span,
-    .stApp [data-testid="stWidgetLabel"] div {
+    .stApp [data-testid="stWidgetLabel"] label {
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-weight: 600 !important;
         opacity: 1 !important;
     }
 
-       /* ★★★ 입력 필드 내부 텍스트 (완전 강제) ★★★ */
+    /* ===== 입력 필드 (흰배경 + 진한글씨) ===== */
     .stApp input,
     .stApp textarea,
-    .stApp select,
-    .stApp [data-baseweb="select"] span,
-    .stApp [data-baseweb="input"] input,
-    .stApp [data-baseweb="textarea"] textarea {
-        color: #1a1a2e !important;
-        background-color: rgba(255,255,255,0.95) !important;
-        font-weight: 600 !important;
-        -webkit-text-fill-color: #1a1a2e !important;
+    .stApp select {
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
+        background-color: #ffffff !important;
+        font-weight: 500 !important;
+        opacity: 1 !important;
     }
 
-    /* ★★★ number_input 전용 (완전 강제) ★★★ */
+    /* ===== number_input 전용 ===== */
     .stApp .stNumberInput input,
-    .stApp .stNumberInput [data-baseweb="input"] input,
     .stApp [data-testid="stNumberInput"] input,
-    .stApp [data-baseweb="input"] input[type="number"],
-    .stApp [data-baseweb="input"] input[inputmode="numeric"] {
-        color: #1a1a2e !important;
-        -webkit-text-fill-color: #1a1a2e !important;
+    .stApp [data-baseweb="input"] input {
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
         background-color: #ffffff !important;
         font-weight: 700 !important;
         font-size: 1rem !important;
         opacity: 1 !important;
     }
 
-    /* ★★★ selectbox 내부 텍스트도 진하게 ★★★ */
+    /* ===== number_input +/- 버튼 ===== */
+    .stApp [data-testid="stNumberInput"] button,
+    .stApp .stNumberInput button {
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
+        background-color: #e0e0e0 !important;
+    }
+
+    /* ===== selectbox ===== */
     .stApp [data-baseweb="select"] > div {
-        background-color: rgba(255,255,255,0.95) !important;
+        background-color: #ffffff !important;
     }
-    .stApp [data-baseweb="select"] > div > div {
-        color: #1a1a2e !important;
-        -webkit-text-fill-color: #1a1a2e !important;
-        font-weight: 600 !important;
+    .stApp [data-baseweb="select"] span,
+    .stApp [data-baseweb="select"] div {
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
+        font-weight: 500 !important;
     }
-
-    /* ★★★ placeholder ★★★ */
-    .stApp input::placeholder,
-    .stApp textarea::placeholder {
-        color: #888888 !important;
-        -webkit-text-fill-color: #888888 !important;
-        opacity: 1 !important;
-    }
+    .stApp [data-baseweb="select"] svg {
+        fill: #111111 !important;
     }
 
-    /* ★★★ placeholder 텍스트 ★★★ */
+    /* ===== placeholder ===== */
     .stApp input::placeholder,
     .stApp textarea::placeholder {
         color: #999999 !important;
+        -webkit-text-fill-color: #999999 !important;
         opacity: 1 !important;
     }
 
-    /* ★★★ selectbox 드롭다운 텍스트 ★★★ */
-    .stApp [data-baseweb="select"] {
-        color: #ffffff !important;
-    }
-    .stApp [data-baseweb="select"] > div {
-        background-color: rgba(255,255,255,0.1) !important;
-        color: #ffffff !important;
-    }
-    
-    /* ★★★ number input 버튼 ★★★ */
-    .stApp [data-baseweb="input"] {
-        background-color: rgba(255,255,255,0.1) !important;
-    }
-    .stApp button[kind="minimal"] {
-        color: #ffffff !important;
+    /* ===== 사이드바 배경 ===== */
+    [data-testid="stSidebar"],
+    [data-testid="stSidebar"] > div {
+        background: #16132b !important;
     }
 
-    /* ── 사이드바 ── */
-    [data-testid="stSidebar"] {
-        background: #1a1a2e !important;
-    }
-    [data-testid="stSidebar"] * {
-        color: #f0f0f0 !important;
-    }
+    /* ===== 사이드바 모든 텍스트 ===== */
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div,
     [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
-    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
+    [data-testid="stSidebar"] li,
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] caption,
+    [data-testid="stSidebar"] small {
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         opacity: 1 !important;
     }
 
-    /* ── 메인 타이틀 ── */
+    /* ===== 사이드바 st.info 박스 ===== */
+    [data-testid="stSidebar"] .stAlert,
+    [data-testid="stSidebar"] .stAlert p,
+    [data-testid="stSidebar"] .stAlert span,
+    [data-testid="stSidebar"] .stAlert div,
+    [data-testid="stSidebar"] [data-testid="stNotification"],
+    [data-testid="stSidebar"] [data-testid="stNotification"] p {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background-color: rgba(102, 126, 234, 0.25) !important;
+        border: 1px solid rgba(102, 126, 234, 0.4) !important;
+        font-weight: 500 !important;
+        opacity: 1 !important;
+    }
+
+    /* ===== 사이드바 st.caption ===== */
+    [data-testid="stSidebar"] .stCaption,
+    [data-testid="stSidebar"] [data-testid="stCaption"],
+    [data-testid="stSidebar"] [data-testid="stCaption"] p,
+    [data-testid="stSidebar"] [data-testid="stCaption"] span {
+        color: #cccccc !important;
+        -webkit-text-fill-color: #cccccc !important;
+        opacity: 1 !important;
+    }
+
+    /* ===== 사이드바 버튼 ===== */
+    [data-testid="stSidebar"] button,
+    [data-testid="stSidebar"] button p,
+    [data-testid="stSidebar"] button span,
+    [data-testid="stSidebar"] button div,
+    [data-testid="stSidebar"] .stButton button {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background-color: rgba(167, 139, 250, 0.3) !important;
+        border: 1px solid rgba(167, 139, 250, 0.5) !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stSidebar"] button:hover {
+        background-color: rgba(167, 139, 250, 0.5) !important;
+    }
+
+    /* ===== 메인 버튼 (질문하기) ===== */
+    .stApp button[kind="primary"],
+    .stApp button[kind="primary"] p,
+    .stApp button[kind="primary"] span {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    /* ===== 메인 st.warning, st.error 등 ===== */
+    .stApp .stAlert p,
+    .stApp .stAlert span {
+        color: #333333 !important;
+        -webkit-text-fill-color: #333333 !important;
+    }
+
+    /* ===== 구분선 ===== */
+    .stApp hr {
+        border-color: rgba(255,255,255,0.15) !important;
+    }
+
+    /* ===== 코드블록 ===== */
+    .stApp pre {
+        background: rgba(0,0,0,0.4) !important;
+    }
+    .stApp pre code {
+        color: #e0e0e0 !important;
+        -webkit-text-fill-color: #e0e0e0 !important;
+    }
+    .stApp code {
+        color: #f093fb !important;
+        -webkit-text-fill-color: #f093fb !important;
+    }
+
+    /* ===== 커스텀 클래스들 ===== */
     .main-title {
         text-align: center;
         font-size: 2.5rem;
@@ -136,11 +206,10 @@ st.markdown("""
     .sub-title {
         text-align: center;
         color: #cccccc !important;
+        -webkit-text-fill-color: #cccccc !important;
         font-size: 1rem;
         margin-bottom: 2rem;
     }
-
-    /* ── 모델 선택 카드 ── */
     .model-card {
         background: rgba(255,255,255,0.07);
         border: 1px solid rgba(255,255,255,0.15);
@@ -148,20 +217,6 @@ st.markdown("""
         padding: 1rem 1.2rem;
         margin-bottom: 1rem;
     }
-
-    /* ── AI 답변 영역 ── */
-    .answer-box {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(102,126,234,0.4);
-        border-radius: 16px;
-        padding: 1.5rem;
-        margin-top: 1rem;
-        color: #ffffff !important;
-        line-height: 1.9;
-        font-size: 1.05rem;
-    }
-
-    /* ── 토큰 사용량 카드 ── */
     .token-card {
         background: rgba(102,126,234,0.15);
         border: 1px solid rgba(102,126,234,0.4);
@@ -171,22 +226,23 @@ st.markdown("""
     }
     .token-title {
         color: #a78bfa !important;
+        -webkit-text-fill-color: #a78bfa !important;
         font-weight: 700;
         font-size: 1rem;
         margin-bottom: 0.5rem;
     }
     .token-item {
         color: #e8e8e8 !important;
+        -webkit-text-fill-color: #e8e8e8 !important;
         font-size: 0.95rem;
         padding: 0.25rem 0;
     }
     .token-highlight {
         color: #f093fb !important;
+        -webkit-text-fill-color: #f093fb !important;
         font-weight: 700;
         font-size: 1rem;
     }
-
-    /* ── 사이드바: 누적 사용량 ── */
     .total-usage {
         text-align: center;
         background: rgba(167,139,250,0.15);
@@ -197,30 +253,33 @@ st.markdown("""
     }
     .usage-title {
         color: #a78bfa !important;
+        -webkit-text-fill-color: #a78bfa !important;
         font-weight: 700;
         font-size: 1.1rem;
         margin-bottom: 0.6rem;
     }
     .usage-detail {
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         font-size: 0.95rem;
         line-height: 1.8;
     }
     .val-input {
         color: #7dd3fc !important;
+        -webkit-text-fill-color: #7dd3fc !important;
         font-weight: 700;
     }
     .val-output {
         color: #f0abfc !important;
+        -webkit-text-fill-color: #f0abfc !important;
         font-weight: 700;
     }
     .val-total {
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         font-weight: 700;
         font-size: 1.05rem;
     }
-
-    /* ── 대화 기록 ── */
     .history-q {
         background: rgba(102,126,234,0.25);
         border-left: 4px solid #667eea;
@@ -228,6 +287,7 @@ st.markdown("""
         padding: 0.8rem 1rem;
         margin: 0.6rem 0 0.3rem 0;
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         font-size: 0.95rem;
         font-weight: 600;
     }
@@ -238,72 +298,32 @@ st.markdown("""
         padding: 0.8rem 1rem;
         margin: 0 0 0.5rem 0;
         color: #e8e8e8 !important;
+        -webkit-text-fill-color: #e8e8e8 !important;
         font-size: 0.9rem;
         line-height: 1.7;
     }
     .history-tokens {
         font-size: 0.8rem;
-        color: #b0b0b0 !important;
+        color: #bbbbbb !important;
+        -webkit-text-fill-color: #bbbbbb !important;
         margin-top: 0.4rem;
     }
-
-    /* ── 경고 박스 ── */
     .warning-box {
         background: rgba(255, 193, 7, 0.12);
         border: 1px solid rgba(255, 193, 7, 0.4);
         border-radius: 10px;
         padding: 1rem;
         color: #ffd54f !important;
+        -webkit-text-fill-color: #ffd54f !important;
         text-align: center;
         margin: 2rem 0;
     }
-
-    /* ── 구분선 색상 ── */
-    .stApp hr {
-        border-color: rgba(255,255,255,0.15) !important;
-    }
-
-    /* ── st.info, st.warning 등 알림 텍스트 ── */
-    .stAlert p {
-        color: #333333 !important;
-    }
-
-    /* ── 하단 정보 ── */
     .footer-info {
         text-align: center;
         color: #999999 !important;
+        -webkit-text-fill-color: #999999 !important;
         font-size: 0.8rem;
         padding: 1rem 0;
-    }
-
-    /* ── 버튼 텍스트 ── */
-    .stApp button[kind="primary"] p,
-    .stApp button[kind="primary"] span {
-        color: #ffffff !important;
-    }
-    .stApp button p,
-    .stApp button span {
-        color: #ffffff !important;
-    }
-    
-    /* ── markdown 내부 텍스트 ── */
-    .stApp .stMarkdown p,
-    .stApp .stMarkdown li,
-    .stApp .stMarkdown h1,
-    .stApp .stMarkdown h2,
-    .stApp .stMarkdown h3,
-    .stApp .stMarkdown h4,
-    .stApp .stMarkdown code,
-    .stApp .stMarkdown span {
-        color: #f0f0f0 !important;
-    }
-    
-    /* ── 코드블록 배경 ── */
-    .stApp .stMarkdown pre {
-        background: rgba(0,0,0,0.3) !important;
-    }
-    .stApp .stMarkdown pre code {
-        color: #e0e0e0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -379,9 +399,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 selected_model = MODEL_OPTIONS[selected_model_name]
 
-# ──────────────────────────────────────────────
-# 시스템 프롬프트
-# ──────────────────────────────────────────────
 SYSTEM_PROMPT = """당신은 당곡고등학교 학생들의 학습을 돕는 친절하고 유능한 AI 도우미입니다.
 학생들이 이해하기 쉽도록 명확하고 정확하게 설명해주세요.
 필요하다면 예시를 들어 설명해주세요.
@@ -444,7 +461,7 @@ if send_clicked and question.strip():
                 <div class="token-item">
                     ⚪ 합계: <span class="token-highlight">{input_tokens + output_tokens:,}</span> 토큰
                 </div>
-                <div class="token-item" style="margin-top:0.5rem; font-size:0.85rem; color:#aaa !important;">
+                <div class="token-item" style="margin-top:0.5rem; font-size:0.85rem;">
                     사용 모델: {selected_model_name}
                 </div>
             </div>
@@ -453,10 +470,6 @@ if send_clicked and question.strip():
         except Exception as e:
             error_msg = str(e)
             st.error(f"❌ 오류 발생: {error_msg}")
-            if "invalid_api_key" in error_msg or "authentication" in error_msg.lower():
-                st.warning("API 키가 올바르지 않습니다.")
-            elif "rate_limit" in error_msg.lower():
-                st.warning("호출 한도 도달. 잠시 후 다시 시도하세요.")
 
 elif send_clicked and not question.strip():
     st.warning("⚠️ 질문을 입력해주세요!")
@@ -482,7 +495,13 @@ with st.sidebar:
         </div>
         """, unsafe_allow_html=True)
     else:
-        st.info("아직 질문 기록이 없습니다.")
+        st.markdown("""
+        <div style="background:rgba(102,126,234,0.2); border:1px solid rgba(102,126,234,0.4);
+                    border-radius:10px; padding:0.8rem 1rem; text-align:center;
+                    color:#ffffff !important; -webkit-text-fill-color:#ffffff !important;">
+            아직 질문 기록이 없습니다.
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
     st.markdown("## 📜 대화 기록")
@@ -503,7 +522,12 @@ with st.sidebar:
             </div>
             """, unsafe_allow_html=True)
     else:
-        st.caption("질문을 하면 여기에 기록됩니다.")
+        st.markdown("""
+        <div style="color:#cccccc !important; -webkit-text-fill-color:#cccccc !important;
+                    font-size:0.9rem; padding:0.5rem 0;">
+            질문을 하면 여기에 기록됩니다.
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
     if st.button("🗑️ 대화 기록 초기화", use_container_width=True):
